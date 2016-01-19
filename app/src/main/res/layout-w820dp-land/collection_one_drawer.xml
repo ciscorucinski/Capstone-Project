@@ -26,6 +26,25 @@
         layout="@layout/collection_all_appbar"/>
 
     <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/drawer_header_left_nav_allscreens"
+        app:menu="@menu/activity_navigation_drawer_main">
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="-48dp"
+            android:translationZ="2dp"
+            app:menu="@menu/activity_navigation_drawer_extra"/>
+
+    </android.support.design.widget.NavigationView>
+
+    <android.support.design.widget.NavigationView
         android:id="@+id/playlist_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

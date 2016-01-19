@@ -56,7 +56,7 @@ public class PlaylistCollectionsActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		// setContentView(R.layout.collection_all_drawer);
 		// TODO: 1/18/2016
-		setContentView(R.layout.collection_one_drawer);
+		setContentView(R.layout.collection_all_drawer);
 
 		/**
 		 * The {@link android.support.v4.view.PagerAdapter} that will provide

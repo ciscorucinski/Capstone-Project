@@ -22,18 +22,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:openDrawer="end">
 
     <include
         layout="@layout/collection_all_appbar"/>
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/playlist_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        app:headerLayout="@layout/drawer_header_right_nav_collection_one"
-        app:menu="@menu/collection_playlist"/>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
@@ -53,5 +45,13 @@
             app:menu="@menu/activity_navigation_drawer_extra"/>
 
     </android.support.design.widget.NavigationView>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/playlist_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        app:headerLayout="@layout/drawer_header_right_nav_collection_one"
+        app:menu="@menu/collection_playlist"/>
 
 </android.support.v4.widget.DrawerLayout>
