@@ -15,16 +15,22 @@
   ~    limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-<resources>
-    <color name="colorPrimary">@color/blue_grey_700</color>
-    <color name="colorPrimaryDark">@color/blue_grey_900</color>
-    <color name="colorAccent">@color/blue_grey_500</color>
+<FrameLayout android:id="@+id/frame_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <color name="blue_grey_500">#607D8B</color>
-    <color name="blue_grey_600">#546E7A</color>
-    <color name="blue_grey_700">#455A64</color>
-    <color name="blue_grey_800">#37474F</color>
-    <color name="blue_grey_900">#263238</color>
+    <include
+        layout="@layout/collection_all_appbar"/>
 
-    <color name="colorAccentHighlight">#40607D8B</color>
-</resources>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/playlist_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        app:headerLayout="@layout/drawer_header_right_nav_collection_one"
+        app:menu="@menu/collection_playlist"/>
+
+</FrameLayout>

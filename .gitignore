@@ -1,5 +1,4 @@
-# IntelliJ
-# ========
+### IntelliJ
 
 *.iml
 .gradle
@@ -11,8 +10,7 @@
 /build
 /captures
 
-# Android
-# =======
+### Android
 
 # Built application files
 *.apk
@@ -41,3 +39,6 @@ proguard/
 
 # Log Files
 *.log
+
+### Others
+google-services.json

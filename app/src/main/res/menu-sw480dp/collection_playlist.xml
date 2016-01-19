@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2016 Christopher Rucinski
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <group android:checkableBehavior="single">
+        <!--http://stackoverflow.com/a/25298564/2333021-->
+
+        <item android:title="Current Video">
+            <menu>
+                <item
+                    android:enabled="false"
+                    android:title="Psy - Napal Baji"
+                    />
+            </menu>
+        </item>
+
+        <item android:title="Playlist">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:title="나인뮤지스 성인식 안무 거울모드"/>
+                    <item
+                        android:title="유라 민아 Yura Minah - 성인식 (Coming Of Age Ceremony 박지윤 Park Ji-yoon) @악스홀 걸스데이 Girl's Day 140713"/>
+                    <item
+                        android:title="130517 Music Bank E700 Special 나인뮤지스 성인식"/>
+                    <item
+                        android:title="[엠넷멀티캠] 나인뮤지스 성인식 경리 직캠 Nine Muses Kyungri Fancam @Mnet MCOUNTDOWN_150305"/>
+                    <item
+                        android:title="아이유 콘서트 성인식 + 트러블메이커"/>
+                    <item
+                        android:title="[쇼미더머니2_6회] 매드클라운(Mad Clown) &amp; 아웃사이더(Outsider) - 성인식 (feat.IVY) @ 2차 공연"/>
+                    <item
+                        android:title="나인뮤지스성인식"/>
+                    <item
+                        android:title="90년대인기가요! 성인식 안무배우기 @댄스조아 댄스학원"/>
+                    <item
+                        android:title="[MPD직캠] 나인뮤지스 직캠 성인식 Coming of age ceremony 9MUSES Fancam Mnet MCOUNTDOWN 150305"/>
+                    <item
+                        android:title="[Dance Cover] 김소정(Kimsojung) - 성인식"/>
+                </group>
+            </menu>
+        </item>
+    </group>
+</menu>

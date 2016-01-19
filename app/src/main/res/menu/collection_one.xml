@@ -15,16 +15,30 @@
   ~    limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-<resources>
-    <color name="colorPrimary">@color/blue_grey_700</color>
-    <color name="colorPrimaryDark">@color/blue_grey_900</color>
-    <color name="colorAccent">@color/blue_grey_500</color>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <color name="blue_grey_500">#607D8B</color>
-    <color name="blue_grey_600">#546E7A</color>
-    <color name="blue_grey_700">#455A64</color>
-    <color name="blue_grey_800">#37474F</color>
-    <color name="blue_grey_900">#263238</color>
+    <item
+        android:id="@+id/action_card_play_all"
+        android:title="@string/action_card_play_all"
+        />
 
-    <color name="colorAccentHighlight">#40607D8B</color>
-</resources>
+    <item
+        android:id="@+id/action_pin"
+        android:title="@string/action_pin"
+        />
+
+    <item android:title="@string/action_remove_parent">
+
+        <menu>
+            <item
+                android:id="@+id/action_card_remove"
+                android:title="@string/action_card_remove"
+                />
+
+            <item
+                android:id="@+id/action_remove_category_setting"
+                android:title="@string/action_remove_category_setting"
+                />
+        </menu>
+    </item>
+</menu>

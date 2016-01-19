@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ~ Copyright 2016 Christopher Rucinski
   ~
@@ -15,16 +14,14 @@
   ~    limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-<resources>
-    <color name="colorPrimary">@color/blue_grey_700</color>
-    <color name="colorPrimaryDark">@color/blue_grey_900</color>
-    <color name="colorAccent">@color/blue_grey_500</color>
-
-    <color name="blue_grey_500">#607D8B</color>
-    <color name="blue_grey_600">#546E7A</color>
-    <color name="blue_grey_700">#455A64</color>
-    <color name="blue_grey_800">#37474F</color>
-    <color name="blue_grey_900">#263238</color>
-
-    <color name="colorAccentHighlight">#40607D8B</color>
-</resources>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"
+    >
+    <gradient
+        android:angle="135"
+        android:centerColor="@color/blue_grey_700"
+        android:endColor="@color/blue_grey_900"
+        android:startColor="@color/blue_grey_500"
+        android:type="linear"
+        />
+</shape>
