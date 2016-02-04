@@ -1,46 +1,45 @@
 /*******************************************************************************
  * Copyright 2016 Christopher Rucinski
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  ******************************************************************************/
 
 package io.github.ciscorucinski.nanodegree.android.capstone;
 
-import android.graphics.Color;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.google.android.youtube.player.YouTubePlayer;
 
-public class PlaylistCollectionActivity extends AppCompatActivity
-		implements NavigationView.OnNavigationItemSelectedListener {
+public class PlaylistCollectionActivity extends AppCompatNavigationDrawerActivity
+		implements YouTubeVideoFragment.YouTubeVideoFragmentListener {
+
+	private static final int RECOVERY_DIALOG_REQUEST = 1;
+
+	private YouTubePlayer.OnInitializedListener youTubeInitializer;
+	private YouTubePlayer.Provider youTubeProvider;
+
+	public static Intent createIntent(Context context) {
+		return new Intent(context, PlaylistCollectionActivity.class);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,76 +47,37 @@ public class PlaylistCollectionActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.collection_one_drawer);
 
-		/**
-		 * The {@link android.support.v4.view.PagerAdapter} that will provide
-		 * fragments for each of the sections. We use a
-		 * {@link FragmentPagerAdapter} derivative, which will keep every
-		 * loaded fragment in memory. If this becomes too memory intensive, it
-		 * may be best to switch to a
-		 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-		 */
-		CollectionsPagerAdapter mCollectionsPagerAdapter;
+		setupToolbarAndNavigation();
 
-		/**
-		 * The {@link ViewPager} that will host the section contents.
-		 */
-		ViewPager mViewPager;
+		DrawerLayout drawer = getDrawer();
 
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
+		if (getResources().getBoolean(R.bool.is_drawer_locked)) {
 
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the activity.
-		mCollectionsPagerAdapter = new CollectionsPagerAdapter(getSupportFragmentManager());
+			drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN, GravityCompat.END);
 
-		// Set up the ViewPager with the sections adapter.
-		mViewPager = (ViewPager) findViewById(R.id.container);
-		mViewPager.setAdapter(mCollectionsPagerAdapter);
+		} else {
 
-		TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-		tabLayout.setupWithViewPager(mViewPager);
-		tabLayout.setSelectedTabIndicatorColor(Color.WHITE);
+			drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.END);
+			drawer.closeDrawer(GravityCompat.END);
 
-		//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-		//        fab.setOnClickListener(new View.OnClickListener() {
-		//            @Override
-		//            public void onClick(View view) {
-		//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-		//                        .setAction("Action", null).show();
-		//            }
-		//        });
+		}
 
-		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-				this, drawer, toolbar, R.string.navigation_drawer_open,
-				R.string.navigation_drawer_close);
-		drawer.setDrawerListener(toggle);
-		toggle.syncState();
+		YouTubeVideoFragment youTubePlayerFragment = YouTubeVideoFragment.newTestInstance();
 
-		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-		NavigationView navigationSettingsView = (NavigationView) findViewById(R.id.nav_setting);
-
-		navigationSettingsView.setScrollY(100);
-		navigationView.setNavigationItemSelectedListener(this);
-		navigationSettingsView.setNavigationItemSelectedListener(this);
+		// Add the fragment to the Activity
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.youtube_fragment_container, youTubePlayerFragment,
+						YouTubeVideoFragment.TAG)
+				.commit();
 
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onPrepareOptionsMenu(final Menu menu) {
 
-		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+		getMenuInflater().inflate(R.menu.activity_toolbar_collection_one, menu);
 
-		if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
-		else super.onBackPressed();
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.collections_all, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -130,146 +90,87 @@ public class PlaylistCollectionActivity extends AppCompatActivity
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_settings) {
 			return true;
+		} else if (id == R.id.action_toolbar_open_playlist) {
+			DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+			drawer.openDrawer(GravityCompat.END);
+			return true;
+		} else if (id == R.id.action_toolbar_video_information) {
+			showVideoInformation();
+			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
 
-	@SuppressWarnings("StatementWithEmptyBody")
+	private void showVideoInformation() {
+
+//		String htmlEncodedMessage = String.format                                     (
+//				getString(R.string.dialog_text_template),
+//				getString(R.string.dialog_text_domain), jokes.getJokeProvider(),
+//				getString(R.string.dialog_text_url), jokes.getJokeProviderURL(),
+//				getString(R.string.dialog_text_notes), getString(R.string.dialog_note));
+//
+//		new AlertDialog.Builder(this)
+//				.setTitle(getString(R.string.dialog_title))
+//				.setMessage(Html.fromHtml(htmlEncodedMessage))
+//				.setPositiveButton(getString(R.string.dialog_button_ok), null)
+//				.setNeutralButton(getString(R.string.dialog_button_copy_url),
+//				                  new ClipboardListener(context, jokes.getJokeProviderURL()))
+//				.show();
+		new AlertDialog.Builder(this)
+				.setTitle("Example Title")
+				.setMessage("Example message")
+				.setPositiveButton("Positive Button", null)
+				.setNeutralButton("Neutral Button", null)
+				.show();
+	}
+
 	@Override
-	public boolean onNavigationItemSelected(MenuItem item) {
-		// Handle navigation view item clicks here.
-		int id = item.getItemId();
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		//        if (id == R.id.nav_camera) {
-		//            // Handle the camera action
-		//        } else if (id == R.id.nav_gallery) {
-		//
-		//        } else if (id == R.id.nav_slideshow) {
-		//
-		//        } else if (id == R.id.nav_manage) {
-		//
-		//        } else if (id == R.id.nav_share) {
-		//
-		//        } else if (id == R.id.nav_send) {
-		//
-		//        }
+		if (requestCode == RECOVERY_DIALOG_REQUEST) {
+			// Retry initialization if user performed a recovery action
+			youTubeProvider.initialize(Developer.YOUTUBE_KEY, youTubeInitializer);
+		}
 
-		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-		drawer.closeDrawer(GravityCompat.START);
-
-		return true;
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class CollectionsFragment extends Fragment {
+	@Override
+	public void onReveiveYouTubeProvider(YouTubePlayer.Provider provider,
+										 YouTubePlayer.OnInitializedListener initializer) {
 
-		/**
-		 * The fragment argument representing the section number for this
-		 * fragment.
-		 */
-		private static final String ARG_SECTION_NUMBER = "section_number";
+		this.youTubeProvider = provider;
+		this.youTubeInitializer = initializer;
 
-		private PlaylistsRecyclerAdapter adapter;
-
-		public CollectionsFragment() { }
-
-		/**
-		 * Returns a new instance of this fragment for the given section
-		 * number.
-		 */
-		public static CollectionsFragment newInstance(int sectionNumber) {
-
-			CollectionsFragment fragment = new CollectionsFragment();
-			Bundle args = new Bundle();
-
-			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-			fragment.setArguments(args);
-
-			return fragment;
-
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		                         Bundle savedInstanceState) {
-
-			View rootView = inflater.inflate(R.layout.collection_all_content_fragment, container,
-			                                 false);
-
-			//            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-			//            textView.setText(getString(R.string.section_format, getArguments()
-			// .getInt(ARG_SECTION_NUMBER)));
-
-			adapter = new PlaylistsRecyclerAdapter(getActivity(), new ArrayList<>());
-
-			RecyclerView collectionsList;
-
-			collectionsList = (RecyclerView) rootView.findViewById(R.id.playlist_collection_list);
-			collectionsList.setAdapter(adapter);
-			collectionsList.setItemAnimator(new DefaultItemAnimator());
-			collectionsList.setClickable(true);
-
-			return rootView;
-
-		}
 	}
 
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
-	public class CollectionsPagerAdapter extends FragmentPagerAdapter {
+	@Override
+	public void onFragmentInteraction(Uri uri) {
 
-		//        @Override
-		//        public void startUpdate(ViewGroup container) {
-		//            super.startUpdate(container);
-		//
-		//            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-		//            fab.show();
-		//        }
-		//
-		//        @Override
-		//        public void finishUpdate(ViewGroup container) {
-		//            super.finishUpdate(container);
-		//
-		//            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-		//            fab.hide();
-		//        }
-
-		public CollectionsPagerAdapter(FragmentManager fm) {
-
-			super(fm);
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a CollectionsFragment (defined as a static inner class below).
-			return CollectionsFragment.newInstance(position + 1);
-
-		}
-
-		@Override
-		public int getCount() { return 2; }
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-
-			switch (position) {
-				case 0:
-					return "Liked YouTube Videos";
-				case 1:
-					return "Personal";
-
-			}
-
-			return null;
-
-		}
 	}
 
+	public void onPlaylistPlaybackItemClick(MenuItem item) {
+
+
+
+	}
+
+	public void onPlaylistEditClick(MenuItem item) {
+
+
+	}
+
+	public void onPlaylistOverflowClick(View view) {
+
+		PopupMenu popup = new PopupMenu(this, view);
+
+		MenuInflater inflater = popup.getMenuInflater();
+		inflater.inflate(R.menu.drawer_end_menu, popup.getMenu());
+
+	}
+
+	public void onPlaylistPlaybackControlClick(View view) {
+
+
+	}
 }

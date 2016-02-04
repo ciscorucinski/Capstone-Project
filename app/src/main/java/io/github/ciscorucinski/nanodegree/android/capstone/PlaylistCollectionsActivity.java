@@ -1,36 +1,31 @@
 /*******************************************************************************
  * Copyright 2016 Christopher Rucinski
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  ******************************************************************************/
 
 package io.github.ciscorucinski.nanodegree.android.capstone;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,16 +34,11 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-public class PlaylistCollectionsActivity extends AppCompatActivity
-		implements NavigationView.OnNavigationItemSelectedListener {
+public class PlaylistCollectionsActivity extends AppCompatNavigationDrawerActivity {
 
-	private static final int DEFAULT_LEFT_SCRIM_COLOR = 0x99000000;
-	private static final int DEFAULT_RIGHT_SCRIM_COLOR = Color.TRANSPARENT;
-
-	private int currentSlidingDrawer;
-
-	private DrawerLayout drawer;
-	private ActionBarDrawerToggle toggle;
+	public static Intent createIntent(Context context) {
+		return new Intent(context, PlaylistCollectionsActivity.class);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +47,8 @@ public class PlaylistCollectionsActivity extends AppCompatActivity
 		// setContentView(R.layout.collection_all_drawer);
 		// TODO: 1/18/2016
 		setContentView(R.layout.collection_all_drawer);
+
+		Authenticator.log(this);
 
 		/**
 		 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -73,12 +65,11 @@ public class PlaylistCollectionsActivity extends AppCompatActivity
 		 */
 		ViewPager mViewPager;
 
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
-
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
 		mCollectionsPagerAdapter = new CollectionsPagerAdapter(getSupportFragmentManager());
+
+		setupToolbarAndNavigation();
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.container);
@@ -88,56 +79,53 @@ public class PlaylistCollectionsActivity extends AppCompatActivity
 		tabLayout.setupWithViewPager(mViewPager);
 		tabLayout.setSelectedTabIndicatorColor(Color.WHITE);
 
-		//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-		//        fab.setOnClickListener(new View.OnClickListener() {
-		//            @Override
-		//            public void onClick(View view) {
-		//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-		//                        .setAction("Action", null).show();
-		//            }
-		//        });
-
-		drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-		toggle = new ActionBarDrawerToggle(
-				this, drawer, toolbar, R.string.navigation_drawer_open,
-				R.string.navigation_drawer_close);
-		drawer.setDrawerListener(toggle);
-		toggle.syncState();
-
-		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-		NavigationView navigationSettingsView = (NavigationView) findViewById(R.id.nav_setting);
-		NavigationView playlistView = (NavigationView) findViewById(R.id.playlist_view);
-
-		navigationSettingsView.setScrollY(100);
-		navigationView.setNavigationItemSelectedListener(this);
-		navigationSettingsView.setNavigationItemSelectedListener(this);
-
-	}
-
-	@Override
-	public void onBackPressed() {
-
-		if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
-		else super.onBackPressed();
-
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.collections_all, menu);
+		getMenuInflater().inflate(R.menu.activity_toolbar_collections_all, menu);
 		return true;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == LoginActivity.REQUEST_CODE) {
+
+			Log.e("Login Attempt", "Is user logged in? " + Authenticator.isUserSignedIn(this));
+
+			Authenticator.log(this);
+
+		}
+
+	}
+
+	@Override
+	protected void onStart() {
+
+		super.onStart();
+
+		if (!Authenticator.isUserSignedIn(this)) {
+
+			startActivityForResult(
+					LoginActivity.createIntent(this),
+					LoginActivity.REQUEST_CODE);
+
+		}
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		if (toggle.onOptionsItemSelected(item)) {
-
-			drawer.setScrimColor(DEFAULT_LEFT_SCRIM_COLOR);
-			return true;
-
-		}
+		//		if (toggle.onOptionsItemSelected(item)) {
+		//
+		//			drawer.setScrimColor(DEFAULT_LEFT_SCRIM_COLOR);
+		//			return true;
+		//
+		//		}
 
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
@@ -151,31 +139,6 @@ public class PlaylistCollectionsActivity extends AppCompatActivity
 		}
 
 		return super.onOptionsItemSelected(item);
-	}
-
-	@SuppressWarnings("StatementWithEmptyBody")
-	@Override
-	public boolean onNavigationItemSelected(MenuItem item) {
-		// Handle navigation view item clicks here.
-		int id = item.getItemId();
-
-		//        if (id == R.id.nav_camera) {
-		//            // Handle the camera action
-		//        } else if (id == R.id.nav_gallery) {
-		//
-		//        } else if (id == R.id.nav_slideshow) {
-		//
-		//        } else if (id == R.id.nav_manage) {
-		//
-		//        } else if (id == R.id.nav_share) {
-		//
-		//        } else if (id == R.id.nav_send) {
-		//
-		//        }
-
-		drawer.closeDrawer(GravityCompat.START);
-
-		return true;
 	}
 
 	/**
@@ -239,22 +202,6 @@ public class PlaylistCollectionsActivity extends AppCompatActivity
 	 * one of the sections/tabs/pages.
 	 */
 	public class CollectionsPagerAdapter extends FragmentPagerAdapter {
-
-		//        @Override
-		//        public void startUpdate(ViewGroup container) {
-		//            super.startUpdate(container);
-		//
-		//            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-		//            fab.show();
-		//        }
-		//
-		//        @Override
-		//        public void finishUpdate(ViewGroup container) {
-		//            super.finishUpdate(container);
-		//
-		//            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-		//            fab.hide();
-		//        }
 
 		public CollectionsPagerAdapter(FragmentManager fm) {
 

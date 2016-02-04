@@ -19,7 +19,6 @@
     android:layout_width="match_parent"
     android:layout_height="120dp"
     android:background="@drawable/side_nav_bar"
-    android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
@@ -29,18 +28,21 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingBottom="8dp"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:paddingStart="16dp"
+        android:paddingTop="28dp"
         android:text="Music"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
     <ImageButton
         android:id="@+id/nav_header_collection_playback_control"
         style="@style/Base.Widget.AppCompat.Button.Colored"
-        android:layout_width="48dp"
+        android:layout_width="72dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/nav_header_collection_name"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:onClick="onPlaylistPlaybackControlClick"
         android:src="@drawable/ic_play"
         android:tint="@android:color/white"/>
 
@@ -51,14 +53,16 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/nav_header_collection_playback"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/nav_header_collection_name"/>
+        android:layout_below="@+id/nav_header_collection_name"
+        android:onClick="onPlaylistOverflowClick" />
 
     <TextView
         android:id="@+id/nav_header_collection_num_songs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/nav_header_collection_name"
+        android:layout_above="@+id/nav_header_collection_playback"
         android:layout_toEndOf="@+id/nav_header_collection_playback_control"
+        android:paddingTop="4dp"
         android:text="35 Songs"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
@@ -67,8 +71,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/nav_header_collection_playback_control"
+        android:layout_marginBottom="10dp"
         android:layout_toEndOf="@+id/nav_header_collection_playback_control"
-        android:paddingBottom="4dp"
         android:text="Continuous, Repeat, Random"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
 

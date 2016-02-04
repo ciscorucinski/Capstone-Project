@@ -1,4 +1,4 @@
-<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<?xml version="1.0" encoding="utf-8"?><!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ~ Copyright 2016 Christopher Rucinski
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,19 +14,22 @@
   ~    limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_view"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:clickable="true">
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    app:headerLayout="@layout/drawer_header_left_nav_allscreens"
+    app:menu="@menu/drawer_start_main">
 
-    <io.github.ciscorucinski.nanodegree.android.capstone.CollectionCard
-        android:id="@+id/collection_card"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_setting"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        app:actionText="Play All"
-        app:popup_menu="@menu/card_collection_all" />
+        android:layout_height="150dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="-48dp"
+        android:translationZ="2dp"
+        app:menu="@menu/drawer_start_main_extra" />
 
-</FrameLayout>
+</android.support.design.widget.NavigationView>

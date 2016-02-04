@@ -15,34 +15,21 @@
   ~    limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-<android.support.percent.PercentRelativeLayout android:id="@+id/container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/youtube_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="102dp"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".PlaylistCollectionsActivity"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".PlaylistCollectionActivity"
     tools:showIn="@layout/collection_one_appbar">
 
-    <FrameLayout
-        android:layout_width="750dp"
-        android:layout_height="422dp"
-        android:layout_marginTop="120dp"
-        android:background="@color/colorAccent"
-        >
+    <!--<fragment-->
+    <!--android:name="io.github.ciscorucinski.nanodegree.android.capstone.YouTubeVideoFragment"-->
+    <!--android:id="@+id/youtube_fragment"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--tools:layout="@layout/collection_one_content"/>-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            app:layout_aspectRatio="178%">
-
-        </LinearLayout>
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="320dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:background="@color/colorAccent"/>
-</android.support.percent.PercentRelativeLayout>
+</FrameLayout>

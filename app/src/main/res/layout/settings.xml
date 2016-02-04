@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ~ Copyright 2016 Christopher Rucinski
   ~
@@ -15,14 +14,17 @@
   ~    limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-<menu>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settings_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <!-- Currently empty.  -->
-    <!--Possible ideas for this menu are always visible sorting or different display style -->
+    <fragment
+        android:name="io.github.ciscorucinski.nanodegree.android.capstone.SettingsActivity$SettingsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:tag="main_settings" />
 
-    <!--<item-->
-    <!--android:id="@+id/action_settings"-->
-    <!--android:orderInCategory="100"-->
-    <!--android:title="@string/action_settings"-->
-    <!--app:showAsAction="never" />-->
-</menu>
+</LinearLayout>

@@ -28,7 +28,7 @@
     </style>
 
     <!-- Activity with no Title -->
-    <style name="ThemeOverlay.MyNoTitleActivity" parent="AppTheme">
+    <style name="ThemeOverlay.MyNoTitleActivity" parent="ThemeOverlay.AppCompat">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
@@ -40,12 +40,17 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="AppTheme.Settings">
+        <item name="android:textColorSecondary">@android:color/secondary_text_light</item>
+    </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:actionOverflowButtonStyle">?attr/actionOverflowButtonStyle</item>
+    </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 

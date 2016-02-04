@@ -1,17 +1,15 @@
 /*******************************************************************************
  * Copyright 2016 Christopher Rucinski
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  ******************************************************************************/
 
 package io.github.ciscorucinski.nanodegree.android.capstone;
@@ -39,74 +37,79 @@ import com.google.android.gms.common.api.Status;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements
-                                                     GoogleApiClient.OnConnectionFailedListener,
-                                                     View.OnClickListener {
+public class LoginActivity extends AppCompatActivity
+		implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
 	public static final String TAG = LoginActivity.class.getName();
+	public static int REQUEST_CODE = 9999;
 
 	private GoogleApiClient mGoogleApiClient;
 	private Context context;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+	public static Intent createIntent(Context context) {
+		return new Intent(context, LoginActivity.class);
+	}
 
-	    super.onCreate(savedInstanceState);
-	    setContentView(R.layout.authenticate_activity);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
 
-	    context = this;
-	    boolean is_user_signed_in = Authenticator.isUserSignedIn(this);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.authenticate_activity);
 
-	    // [START configure_signin]
-	    // Configure sign-in to request offline access to the user's ID, basic
-	    // profile, and Google Drive. The first time you request a code you will
-	    // be able to exchange it for an access token and refresh token, which
-	    // you should store. In subsequent calls, the code will only result in
-	    // an access token. By asking for profile access (through
-	    // DEFAULT_SIGN_IN) you will also get an ID Token as a result of the
-	    // code exchange.
-	    String serverClientId = getString(R.string.server_client_id);
-	    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(
-			    GoogleSignInOptions.DEFAULT_SIGN_IN)
-			    .requestScopes(new Scope("https://www.googleapis.com/auth/youtube"))
-			    .requestServerAuthCode(serverClientId)
-			    .requestEmail()
-			    .build();
-	    // [END configure_signin]
+		context = this;
+		boolean is_user_signed_in = Authenticator.isUserSignedIn(this);
 
-	    // Build GoogleAPIClient with the Google Sign-In API and the above options.
-	    mGoogleApiClient = new GoogleApiClient.Builder(this)
-			    .enableAutoManage(this /* FragmentActivity */,
-			                      this /* OnConnectionFailedListener */)
-			    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-			    .build();
+		// [START configure_signin]
+		// Configure sign-in to request offline access to the user's ID, basic
+		// profile, and Google Drive. The first time you request a code you will
+		// be able to exchange it for an access token and refresh token, which
+		// you should store. In subsequent calls, the code will only result in
+		// an access token. By asking for profile access (through
+		// DEFAULT_SIGN_IN) you will also get an ID Token as a result of the
+		// code exchange.
+		String serverClientId = getString(R.string.server_client_id);
+		GoogleSignInOptions gso = new GoogleSignInOptions.Builder(
+				GoogleSignInOptions.DEFAULT_SIGN_IN)
+				.requestScopes(new Scope("https://www.googleapis.com/auth/youtube"))
+				.requestServerAuthCode(serverClientId)
+				.requestEmail()
+				.build();
+		// [END configure_signin]
 
-	    if (is_user_signed_in) {
-		    Log.w(TAG, "User IS logged in!");
+		// Build GoogleAPIClient with the Google Sign-In API and the above options.
+		mGoogleApiClient = new GoogleApiClient.Builder(this)
+				.enableAutoManage(this /* FragmentActivity */,
+						this /* OnConnectionFailedListener */)
+				.addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+				.build();
 
-		    OptionalPendingResult<GoogleSignInResult> pendingResult =
-				    Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
-		    if (pendingResult.isDone()) {
-			    // There's immediate result available.
-			    Log.d(TAG, "Auto Sign-in : passed - " + pendingResult.get().isSuccess());
-			    updateUI(pendingResult.get().isSuccess());
-		    }
+		if (is_user_signed_in) {
+			Log.w(TAG, "User IS logged in!");
 
-        } else {
-		    Log.w(TAG, "User IS NOT logged in!");
-	    }
+			OptionalPendingResult<GoogleSignInResult> pendingResult =
+					Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
 
-	    // Button click listeners
-	    SignInButton googleSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
+			if (pendingResult.isDone()) {
 
-	    googleSignInButton.setStyle(SignInButton.SIZE_WIDE, SignInButton.COLOR_AUTO,
-	                                gso.getScopeArray());
+				// There's immediate result available.
+				Log.d(TAG, "Auto Sign-in : passed - " + pendingResult.get().isSuccess());
+				updateUI(pendingResult.get().isSuccess());
 
-	    googleSignInButton.setOnClickListener(this);
-	    findViewById(R.id.sign_out_button).setOnClickListener(this);
-	    findViewById(R.id.disconnect_button).setOnClickListener(this);
+			}
 
-    }
+		} else {
+			Log.w(TAG, "User IS NOT logged in!");
+		}
+
+		// Button click listeners
+		SignInButton googleSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
+
+		googleSignInButton.setStyle(SignInButton.SIZE_WIDE, SignInButton.COLOR_AUTO,
+				gso.getScopeArray());
+
+		googleSignInButton.setOnClickListener(this);
+
+	}
 
 	private void updateUI(boolean signedIn) {
 
@@ -114,45 +117,41 @@ public class LoginActivity extends AppCompatActivity implements
 
 			((TextView) findViewById(R.id.status)).setText(R.string.signed_in);
 
-			findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-			findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-
-        } else {
+		} else {
 
 			((TextView) findViewById(R.id.status)).setText(R.string.signed_out);
-
-			findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-			findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
 
 		}
 	}
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-	    super.onActivityResult(requestCode, resultCode, data);
+		super.onActivityResult(requestCode, resultCode, data);
 
-	    if (requestCode == Authenticator.REQUEST_CODE) {
-		    GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-		    Log.d(TAG, "onActivityResult:GET_AUTH_CODE:success:" + result.getStatus().isSuccess());
+		if (requestCode == Authenticator.REQUEST_CODE) {
+			GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+			Log.d(TAG, "onActivityResult:GET_AUTH_CODE:success:" + result.getStatus().isSuccess());
 
-		    if (result.isSuccess()) {
-			    // [START get_auth_code]
+			if (result.isSuccess()) {
+				// [START get_auth_code]
 
-			    GoogleSignInAccount acct = result.getSignInAccount();
-			    Authenticator.saveUser(this, acct);
+				GoogleSignInAccount acct = result.getSignInAccount();
+				Authenticator.saveUser(this, acct);
 
-			    // Show signed-in UI.
-			    updateUI(true);
+				// Show signed-in UI.
+				updateUI(true);
 
-			    // TODO(user): send code to server and exchange for access/refresh/ID tokens.
-			    // [END get_auth_code]
-		    } else {
-			    // Show signed-out UI.
-			    updateUI(false);
-		    }
-        }
-    }
+				finish();
+
+				// TODO(user): send code to server and exchange for access/refresh/ID tokens.
+				// [END get_auth_code]
+			} else {
+				// Show signed-out UI.
+				updateUI(false);
+			}
+		}
+	}
 
 	@Override
 	public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -161,23 +160,23 @@ public class LoginActivity extends AppCompatActivity implements
 		Log.d(TAG, "onConnectionFailed:" + connectionResult);
 	}
 
-    @Override
-    public void onClick(View v) {
+	@Override
+	public void onClick(View v) {
 
-	    switch (v.getId()) {
+		switch (v.getId()) {
 
-		    case R.id.sign_in_button:
-			    getAuthCode();
-			    break;
-		    case R.id.sign_out_button:
-			    signOut();
-			    break;
-		    case R.id.disconnect_button:
-			    revokeAccess();
-			    break;
+			case R.id.sign_in_button:
+				getAuthCode();
+				break;
+//			case R.id.sign_out_button:
+//				signOut();
+//				break;
+//			case R.id.disconnect_button:
+//				revokeAccess();
+//				break;
 
-	    }
-    }
+		}
+	}
 
 	private void getAuthCode() {
 		// Start the retrieval process for a server auth code.  If requested, ask for a refresh
@@ -200,7 +199,7 @@ public class LoginActivity extends AppCompatActivity implements
 						Authenticator.clearCurrentUser(context);
 						updateUI(false);
 					}
-				}                                                       );
+				});
 	}
 
 	private void revokeAccess() {
@@ -215,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements
 						Authenticator.clearCurrentUser(context);
 						updateUI(false);
 					}
-				}                                                            );
+				});
 	}
 }
 

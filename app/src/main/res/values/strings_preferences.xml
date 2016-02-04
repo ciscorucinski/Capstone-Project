@@ -1,0 +1,110 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2016 Christopher Rucinski
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<resources>
+
+    <string name="settings">Settings</string>
+
+    <string name="pref_header_categories">Categories</string>
+
+    <string name="pref_category_display_key">key_category_display</string>
+    <string name="pref_category_display">Categories to display</string>
+    <!--<string name="pref_category_display_description">x out of y displayed</string>-->
+
+    <!--<string-array name="search_method">-->
+    <!--<item>After A New Character</item>-->
+    <!--<item>After A Word</item>-->
+    <!--<item>After 3 Characters</item>-->
+    <!--<item>None</item>-->
+    <!--</string-array>-->
+
+    <string-array name="pref_categories_entries">
+        <item>Film &amp; Animation</item>
+        <item>Autos &amp; Vehicles</item>
+        <item>Music</item>
+        <item>Pets &amp; Animals</item>
+        <item>Sports</item>
+        <item>Short Movies</item>
+        <item>Travel &amp; Events</item>
+        <item>Gaming</item>
+        <item>Videoblogging</item>
+        <item>People &amp; Blogs</item>
+        <item>Comedy</item>
+        <item>Entertainment</item>
+        <item>News &amp; Politics</item>
+        <item>Howto &amp; Style</item>
+        <item>Education</item>
+        <item>Science &amp; Technology</item>
+        <item>Nonprofits &amp; Activism</item>
+        <item>Movies</item>
+        <item>Anime &amp; Animation</item>
+        <item>Action &amp; Adventure</item>
+        <item>Classics</item>
+        <item>Comedy</item>
+        <item>Documentary</item>
+        <item>Drama</item>
+        <item>Family</item>
+        <item>Foreign</item>
+        <item>Horror</item>
+        <item>Sci-Fi &amp; Fantasy</item>
+        <item>Thriller</item>
+        <item>Shorts</item>
+        <item>Shows</item>
+        <item>Trailers</item>
+    </string-array>
+
+    <string-array name="pref_categories_values">
+        <item>1</item>
+        <item>2</item>
+        <item>10</item>
+        <item>15</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+    </string-array>
+
+    <string name="pref_header_account">Account</string>
+
+    <string name="pref_account_logout_key">key_account_logout</string>
+    <string name="pref_account_logout">Logout</string>
+    <string name="pref_account_logout_description">Christopher</string>
+
+</resources>
